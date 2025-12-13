@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EventMaster - Регистрация</title>
+    <link rel="stylesheet" href="css/sign-up-style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="registration-container">
+        <div class="right-side">
+            <h1 class="logo">EventMaster</h1>
+
+            <div class="registration-form">
+                <h2>Регистрация</h2>
+
+                <form class="signup-form" name="signup-form" method="POST" novalidate>
+                    <div class="form-group">
+                        <label for="firstName">Логин</label>
+                        <input
+                            type="text"
+                            id="firstName"
+                            name="firstName"
+                            pattern="^[a-zA-Zа-яА-ЯЁё0-9 \-]+$"
+                            data-error-message="Разрешены символы латиницы, кириллицы, цифры, знаки дефиса и пробелы"
+                            aria-describedby="firstName-error"
+                            required
+                        >
+                        <span class="form-error firstName-error" id="firstName-error" aria-live="polite"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="name">Имя</label>
+                        <input
+                            type="text"
+                            id="name"
+                            name="name"
+                            pattern="^[a-zA-Zа-яА-ЯЁё]+$"
+                            data-error-message="Разрешены только буквы латиницы и кириллицы"
+                            aria-describedby="name-error"
+                            required
+                        >
+                        <span class="form-error name-error" id="name-error" aria-live="polite"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="secondname">Фамилия</label>
+                        <input
+                            type="text"
+                            id="secondname"
+                            name="secondname"
+                            pattern="^[a-zA-Zа-яА-ЯЁё]+$"
+                            data-error-message="Разрешены только буквы латиницы и кириллицы"
+                            aria-describedby="secondname-error"
+                            required
+                        >
+                        <span class="form-error secondname-error" id="secondname-error" aria-live="polite"></span>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Почта</label>
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            aria-describedby="email-error"
+                            required
+                        >
+                        <span class="form-error email-error" id="email-error" aria-live="polite"></span>
+                    </div>
+
+                    <div class="form-group password-group">
+                        <label for="password">Пароль</label>
+                        <div class="password-input">
+                            <input
+                                type="password"
+                                id="password"
+                                name="password"
+                                minlength="8"
+                                data-error-message="Пароль должен содержать не менее 8 символов"
+                                aria-describedby="password-error"
+                                required
+                            >
+                            <button type="button" class="toggle-password">
+                                <i class="far fa-eye-slash"></i>
+                            </button>
+                        </div>
+                        <span class="form-error password-error" id="password-error" aria-live="polite"></span>
+                    </div>
+
+                    <div class="form-group password-group">
+                        <label for="confirmPassword">Подтвердить пароль</label>
+                        <div class="password-input">
+                            <input
+                                type="password"
+                                id="confirmPassword"
+                                name="confirmPassword"
+                                data-error-message="Пароли должны совпадать"
+                                aria-describedby="confirmPassword-error"
+                                required
+                            >
+                            <button type="button" class="toggle-password">
+                                <i class="far fa-eye-slash"></i>
+                            </button>
+                        </div>
+                        <span class="form-error confirmPassword-error" id="confirmPassword-error" aria-live="polite"></span>
+                    </div>
+
+                    <div class="form-group checkbox-group">
+                        <input
+                            type="checkbox"
+                            id="termsAgreement"
+                            name="termsAgreement"
+                            aria-describedby="termsAgreement-error"
+                            required
+                        >
+                        <label for="termsAgreement">Я согласен со всеми условиями и политикой конфиденциальности</label>
+                        <span class="form-error termsAgreement-error" id="termsAgreement-error" aria-live="polite"></span>
+                    </div>
+
+                    <button type="submit" class="submit-btn" aria-describedby="form-empty-error">Создать аккаунт</button>
+                    <span class="form-empty-error" id="form-empty-error" aria-live="assertive"></span>
+
+                    <div class="login-link">
+                        <p>Есть аккаунт? <a href="login.html">Войти</a></p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="scripts/signup-base-scripts.js"></script>
+    <script src="scripts/signup-validation.js"></script>
+    <script src="scripts/cloudflare-challenge.js"></script>
+</body>
+</html>

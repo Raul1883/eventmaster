@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Календарь</title>
+    <link rel="stylesheet" href="css/main-page-style.css">
+    <link rel="stylesheet" href="css/calendar-page-style.css">
+    <link rel="stylesheet" href="css/calendar-rows-style.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+</head>
+<body>
+    <header>
+        <div class="logo"><a class="logo-btn" href="index.html">EventMaster</a></div>
+        <nav>
+            <ul>
+                <li><a class="nav-calnendar-btn" href="calendar.html">Организация мероприятия</a></li>
+                <li><a class="nav-registration-btn" href="sign-up.html">Регистрация</a></li>
+                <li><a class="nav-login-btn" href="login.html">Вход</a></li>
+                <li><a href="profile.html" class="profile-icon"></a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <div class="calendar-container">
+        <div class="calendar-header">
+            <div class="month-selector">
+                <button id="prev-month" class="nav-btn">&lt;</button>
+                <h2 id="current-month">Апрель 2025</h2>
+                <button id="next-month" class="nav-btn">&gt;</button>
+            </div>
+        </div>
+        <div class="weekday-grid"></div>
+        <div class="calendar"></div>
+    </div>
+    
+    <!-- Event Creation Modal -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h2>Добавление мероприятия</h2>
+            <form id="registrationForm">
+                <div class="form-group">
+                    <label>Дата:</label>
+                    <input type="text" id="eventDate" readonly>
+                </div>
+                <div class="form-group">
+                    <label>Время:</label>
+                    <input type="time" id="eventTime" required>
+                </div>
+                <div class="form-group">
+                    <label>Название:</label>
+                    <input type="text" id="eventTitle" maxlength="38" required>
+                </div>
+                <div class="form-group">
+                    <label>Описание:</label>
+                    <textarea id="eventDescription" rows="3"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Участники (введите для поиска):</label>
+                    <input type="text" id="eventParticipants" placeholder="Начните вводить для поиска...">
+                    <div id="participantsFeedback" class="participants-feedback"></div>
+                </div>
+                <div class="form-group">
+                    <label>Маршрут прогулки:</label>
+                    <div id="map-container">
+                        <div id="map"></div>
+                        <div class="map-instructions">
+                            <p>Нажмите на карту, чтобы добавить точки маршрута. Правый клик удаляет точку.</p>
+                            <button type="button" id="resetRouteBtn" class="route-btn">Сбросить маршрут</button>
+                        </div>
+                        <input type="hidden" id="routeData">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Длина маршрута:</label>
+                    <p id="routeDistance">Маршрут не задан</p>
+                </div>
+                <button type="submit" class="form-btn">Добавить</button>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Event Details Modal -->
+    <div class="modal-overlay" id="eventDetailsModal">
+        <div class="modal-content">
+            <span class="close-btn close-details">&times;</span>
+            <h2 id="detailsTitle">Информация о мероприятии</h2>
+            <div class="event-details"></div>
+        </div>
+    </div>
+    
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/@mapbox/polyline@1.1.1/src/polyline.js"></script>
+    <script src="scripts/route-planner.js"></script>
+    <script src="scripts/calendar-scripts.js"></script>
+    <script src="scripts/auth-check.js"></script>
+    <script src="scripts/cloudflare-challenge.js"></script>
+</body>
+</html>

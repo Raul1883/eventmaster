@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EventMaster</title>
+    <link rel="stylesheet" href="css/main-page-style.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo"><a class="logo-btn" href="index.html">EventMaster</a></div>
+            <nav>
+                <ul>
+                    <li><a href="calendar.html">Организация мероприятия</a></li>
+                    <li><a href="sign-up.html">Регистрация</a></li>
+                    <li><a href="login.html">Вход</a></li>
+                    <li><a href="profile.html" class="profile-icon"></a></li>
+                </ul>
+            </nav>
+        </header>
+        
+        <div id="events-feed"></div>
+    </div>
+
+    <!-- Notification Button -->
+    <button id="notification-btn" class="notification-btn">
+        <img src="images/notification.svg" alt="Notifications" class="notification-icon" width="24" height="24">
+    </button>
+
+    <!-- Notification Popup -->
+    <div id="notification-popup" class="notification-popup">
+        <h3>Уведомления</h3>
+        <div id="notification-list" class="notification-list"></div>
+    </div>
+    
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/@mapbox/polyline@1.1.1/src/polyline.js"></script>
+    <script src="scripts/route-planner.js"></script>
+    <script src="scripts/index-scripts.js"></script>
+    <script src="scripts/auth-check.js"></script>
+    <script src="scripts/cloudflare-challenge.js"></script>
+</body>
+</html>
