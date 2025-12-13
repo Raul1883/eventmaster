@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  app:
+    build: . 
+    
+    container_name: eventmaster
+
+    ports:
+      - "3000:3000"
+
+    env_file:
+      - .env
+
+    # 6. Перезапускать контейнер при ошибке
+    restart: always
