@@ -134,6 +134,7 @@ function isAuthenticated(req, res, next) {
 }
 
 // Wrapper for notification creation to log all notifications
+// переделать
 function createNotification(userId, message, type, eventId, callback) {
   const createdAt = new Date().toISOString();
   console.log(
@@ -190,6 +191,7 @@ function createNotification(userId, message, type, eventId, callback) {
 }
 
 // API для регистрации пользователя
+// переделать
 app.post("/api/register", (req, res) => {
   const { login, password, email, name, secondname } = req.body;
 
@@ -242,6 +244,7 @@ app.post("/api/register", (req, res) => {
 });
 
 // API для входа пользователя
+// переделать
 app.post("/api/login", (req, res) => {
   const { loginOrEmail, password } = req.body;
   db.get(
@@ -289,6 +292,7 @@ app.get("/api/check-session", (req, res) => {
 });
 
 // API для получения данных пользователя
+// переделать
 app.get("/api/user/:id", isAuthenticated, (req, res) => {
   const userId = req.params.id;
   if (parseInt(userId) !== req.session.userId) {
@@ -323,6 +327,7 @@ app.get("/api/user/:id", isAuthenticated, (req, res) => {
 });
 
 // API для проверки существования пользователя по логину
+// переделать
 app.get("/api/check-user-login/:login", isAuthenticated, (req, res) => {
   const login = req.params.login;
   db.get(
@@ -354,6 +359,7 @@ app.get("/api/check-user-login/:login", isAuthenticated, (req, res) => {
 });
 
 // API for joining or leaving an event
+// переделать
 app.post("/api/events/:id/:action", isAuthenticated, (req, res) => {
   const eventId = req.params.id;
   const action = req.params.action;
@@ -455,6 +461,7 @@ app.post("/api/events/:id/:action", isAuthenticated, (req, res) => {
 });
 
 // API для обновления профиля пользователя
+// переделать
 app.put("/api/user/:id", isAuthenticated, (req, res) => {
   const userId = req.params.id;
   if (parseInt(userId) !== req.session.userId) {
@@ -495,6 +502,7 @@ app.put("/api/user/:id", isAuthenticated, (req, res) => {
 });
 
 // API для создания мероприятия
+// переделать
 app.post("/api/events", isAuthenticated, (req, res) => {
   const {
     title,
