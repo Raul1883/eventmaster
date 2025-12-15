@@ -306,7 +306,7 @@ async function startServer() {
       console.log("depricated api call");
     });
 
-    // API для удаления мероприятия
+    // DONE API для удаления мероприятия
     app.delete("/api/events/:id", isAuthenticated, async (req, res) => {
       const eventId = req.params.id;
       const userId = req.session.userId;
@@ -395,70 +395,7 @@ async function startServer() {
       }
     });
 
-    //// УВЕДМОЛЕНИЯ УВЕДОМЛЕНИЯ УВЕДОМЛЕНИЯ
-    // Wrapper for notification creation to log all notifications
-    // DONE
-    // потом убрать
-    function createNotification(userId, message, type, eventId, callback) {
-      throw new Error("use depricated func createNotification");
-      const createdAt = new Date().toISOString();
-      console.log(
-        `Attempting to create notification: user_id=${userId}, message="${message}", type=${type}, event_id=${eventId}, created_at=${createdAt}`
-      );
-      db.get(
-        "SELECT id FROM Notifications WHERE user_id = ? AND event_id = ? AND type = ?",
-        [userId, eventId, type],
-        (err, existing) => {
-          if (err) {
-            console.error(
-              `Database error checking existing notification:`,
-              err
-            );
-            return callback(err);
-          }
-          if (existing) {
-            console.log(
-              `Notification already exists for user ${userId} and event ${eventId}, skipping creation`
-            );
-            return callback(null, existing.id);
-          }
-          db.run(
-            "INSERT INTO Notifications (user_id, message, type, event_id, is_read, created_at) VALUES (?, ?, ?, ?, 0, ?)",
-            [userId, message, type, eventId, createdAt],
-            function (err) {
-              if (err) {
-                console.error(`Failed to create notification:`, err);
-                callback(err);
-              } else {
-                const notificationId = this.lastID;
-                console.log(`Notification created with ID: ${notificationId}`);
-                db.get(
-                  "SELECT * FROM Notifications WHERE id = ?",
-                  [notificationId],
-                  (err, row) => {
-                    if (err) {
-                      console.error(
-                        `Error verifying notification ${notificationId}:`,
-                        err
-                      );
-                    } else if (row) {
-                      console.log(`Verified notification:`, row);
-                    } else {
-                      console.error(
-                        `Notification ${notificationId} not found after insertion`
-                      );
-                    }
-                    callback(null, notificationId);
-                  }
-                );
-              }
-            }
-          );
-        }
-      );
-    }
-
-    // API для получения уведомлений пользователя
+    // DONE API для получения уведомлений пользователя
     app.get("/api/notifications", isAuthenticated, async (req, res) => {
       const userId = req.session.userId;
 
@@ -475,7 +412,7 @@ async function startServer() {
       }
     });
 
-    // API для создания уведомления
+    // DONE API для создания уведомления
     // ГОТОВО
     app.post("/api/notifications", isAuthenticated, async (req, res) => {
       const { user_id, message, type = "reminder", event_id } = req.body;
@@ -494,7 +431,7 @@ async function startServer() {
       }
     });
 
-    // API для удаления уведомления
+    // DONE API для удаления уведомления
     app.delete("/api/notifications/:id", isAuthenticated, async (req, res) => {
       const notificationId = req.params.id;
       const userId = req.session.userId;
@@ -511,7 +448,7 @@ async function startServer() {
       }
     });
 
-    // API для пометки уведомления как прочитанного
+    //DONE  API для пометки уведомления как прочитанного
     app.put(
       "/api/notifications/:id/read",
       isAuthenticated,
