@@ -454,6 +454,39 @@ async function asyncJoinOrLeaveEvent(eventId, action, login) {
   };
 }
 
+async function asyncDeleteEvent(eventId, userId) {
+  const result_list = await driver.queryClient.do({
+    fn: async (session) => {
+      const res = await session.execute({
+        parameters: {
+          $id: TypedValues.int32(eventId),
+          $user_id: TypedValues.int32(userId),
+        },
+        text: `
+        SELECT * FROM ${EVENTS_TABLE_NAME}
+        WHERE user_id = $user_id AND id = $id;`,
+      });
+      return (await resultSetToList(res))[0];
+    },
+  });
+
+  if (!result_list)
+    throw new Error("Только создатель мероприятия может его удалить");
+
+  await driver.queryClient.do({
+    fn: async (session) => {
+      const res = await session.execute({
+        parameters: {
+          $id: TypedValues.int32(eventId),
+        },
+        text: `
+        DELETE FROM ${EVENTS_TABLE_NAME}
+        WHERE id = $id;`,
+      });
+    },
+  });
+}
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
 // УВЕДОМЛЕНИЯ /////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -721,7 +754,7 @@ if (require.main === module) {
     await initYDB();
 
     try {
-      const res = await asyncJoinOrLeaveEvent(10, "leave", "login1");
+      const res = await asyncDeleteEvent(2, 1);
 
       console.log(res);
     } catch (err) {
@@ -751,4 +784,5 @@ module.exports = {
   asyncGetAllEvents,
   asyncGetUserEventsById,
   asyncJoinOrLeaveEvent,
+  asyncDeleteEvent,
 };

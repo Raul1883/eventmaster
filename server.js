@@ -20,6 +20,7 @@ const {
   asyncGetAllEvents,
   asyncGetUserEventsById,
   asyncJoinOrLeaveEvent,
+  asyncDeleteEvent,
 } = require("./db-func");
 
 require("dotenv").config();
@@ -218,7 +219,7 @@ async function startServer() {
       }
     });
 
-    // API for joining or leaving an event
+    // DONE API for joining or leaving an event
     app.post("/api/events/:id/:action", isAuthenticated, async (req, res) => {
       const eventId = req.params.id;
       const action = req.params.action;
@@ -301,206 +302,22 @@ async function startServer() {
 
     // API для обновления мероприятия
     app.put("/api/events/:id", isAuthenticated, (req, res) => {
-      const eventId = req.params.id;
-      const user_id = req.session.userId;
-      const {
-        title,
-        description,
-        date,
-        time,
-        creator,
-        participants,
-        route_data,
-        distance,
-      } = req.body;
-
-      console.log(
-        `Received participants in request: ${JSON.stringify(participants)}`
-      );
-
-      db.get(
-        `SELECT id, user_id, participants FROM Events WHERE id = ? AND user_id = ?`,
-        [eventId, user_id],
-        (err, row) => {
-          if (err) {
-            console.error("Ошибка при проверке мероприятия:", err.message);
-            res.status(500).json({ error: "Ошибка при проверке мероприятия" });
-            return;
-          }
-          if (!row) {
-            console.warn(
-              `Попытка редактирования мероприятия ${eventId} пользователем ${user_id}, не являющимся создателем`
-            );
-            res.status(403).json({
-              error: "Только создатель мероприятия может его редактировать",
-            });
-            return;
-          }
-
-          let currentParticipants = [];
-          try {
-            currentParticipants = row.participants
-              ? JSON.parse(row.participants)
-              : [];
-            if (!Array.isArray(currentParticipants)) {
-              currentParticipants = [];
-            }
-          } catch (e) {
-            console.error(
-              `Ошибка парсинга currentParticipants для события ${eventId}:`,
-              e.message
-            );
-            currentParticipants = [];
-          }
-          console.log(
-            `Current participants from database: ${JSON.stringify(
-              currentParticipants
-            )}`
-          );
-
-          const newParticipantsArray = Array.isArray(participants)
-            ? participants.filter(
-                (p) => p && typeof p === "string" && p !== creator
-              )
-            : [];
-          const newParticipantsJson = JSON.stringify([]); // Always initialize with empty participants for update
-          const routeDataJson = route_data ? JSON.stringify(route_data) : null;
-
-          const addedParticipants = newParticipantsArray.filter(
-            (p) => !currentParticipants.includes(p)
-          );
-          console.log(
-            `Added participants: ${JSON.stringify(addedParticipants)}`
-          );
-
-          const stmt = db.prepare(`
-            UPDATE Events
-            SET title = ?, description = ?, date = ?, time = ?, creator = ?,
-                participants = ?, route_data = ?, distance = ?
-            WHERE id = ?
-        `);
-          stmt.run(
-            title,
-            description || null,
-            date,
-            time || null,
-            creator,
-            newParticipantsJson,
-            routeDataJson,
-            distance || null,
-            eventId,
-            function (err) {
-              if (err) {
-                console.error(
-                  "Ошибка при обновлении мероприятия:",
-                  err.message
-                );
-                res
-                  .status(500)
-                  .json({ error: "Ошибка при обновлении мероприятия" });
-              } else {
-                if (addedParticipants.length > 0) {
-                  const notificationPromises = addedParticipants.map(
-                    (login) => {
-                      return new Promise((resolve, reject) => {
-                        console.log(
-                          `Processing notification for login: ${login}`
-                        );
-                        db.get(
-                          "SELECT id FROM Users WHERE login = ?",
-                          [login],
-                          (err, user) => {
-                            if (err) {
-                              console.error(
-                                `Database error looking up user ${login}:`,
-                                err
-                              );
-                              return reject(
-                                new Error(
-                                  `Database error for user ${login}: ${err.message}`
-                                )
-                              );
-                            }
-                            if (!user) {
-                              console.warn(
-                                `User ${login} not found in database, skipping notification.`
-                              );
-                              return resolve();
-                            }
-
-                            const message = `Вы были приглашены на мероприятие "${title}", запланированное на ${date}${
-                              time ? " в " + time : ""
-                            }.`;
-
-                            createNotification(
-                              user.id,
-                              message,
-                              "invitation",
-                              eventId,
-                              (err) => {
-                                if (err) {
-                                  console.error(
-                                    `Failed to create notification for user ${login}:`,
-                                    err
-                                  );
-                                  return reject(
-                                    new Error(
-                                      `Notification creation failed for ${login}: ${err.message}`
-                                    )
-                                  );
-                                }
-                                resolve();
-                              }
-                            );
-                          }
-                        );
-                      });
-                    }
-                  );
-
-                  Promise.allSettled(notificationPromises)
-                    .then((results) => {
-                      const successful = results.filter(
-                        (result) => result.status === "fulfilled"
-                      ).length;
-                      const failed = results.filter(
-                        (result) => result.status === "rejected"
-                      ).length;
-                      const errors = results
-                        .filter((result) => result.status === "rejected")
-                        .map((result) => result.reason.message);
-
-                      if (errors.length > 0) {
-                        console.error("Notification errors:", errors);
-                      }
-                      console.log(
-                        `Notification results: ${successful} successful, ${failed} failed`
-                      );
-                    })
-                    .catch((err) => {
-                      console.error(
-                        "Unexpected error in notification processing:",
-                        err
-                      );
-                    });
-                } else {
-                  console.log(
-                    "No new participants added, skipping notification creation."
-                  );
-                }
-                res.json({ success: true });
-              }
-            }
-          );
-          stmt.finalize();
-        }
-      );
+      res.status(500).json({ error: "Ошибка при обновлении мероприятия" });
+      console.log("depricated api call");
     });
 
     // API для удаления мероприятия
-    app.delete("/api/events/:id", isAuthenticated, (req, res) => {
+    app.delete("/api/events/:id", isAuthenticated, async (req, res) => {
       const eventId = req.params.id;
       const userId = req.session.userId;
+
+      try {
+        await asyncDeleteEvent(eventId, userId);
+        res.json({ success: true });
+      } catch (err) {
+        console.error(err.message);
+        res.status(500).json({ error: "Ошибка при удалении мероприятия" });
+      }
 
       db.get(
         `SELECT id, user_id FROM Events WHERE id = ? AND user_id = ?`,
@@ -642,7 +459,6 @@ async function startServer() {
     }
 
     // API для получения уведомлений пользователя
-    // ГОТОВО (ВОПРОС С СЕССИЯМИ)
     app.get("/api/notifications", isAuthenticated, async (req, res) => {
       const userId = req.session.userId;
 
@@ -679,7 +495,6 @@ async function startServer() {
     });
 
     // API для удаления уведомления
-    // ГОТОВО (ВОПРОС С СЕССИЯМИ)
     app.delete("/api/notifications/:id", isAuthenticated, async (req, res) => {
       const notificationId = req.params.id;
       const userId = req.session.userId;
@@ -697,7 +512,6 @@ async function startServer() {
     });
 
     // API для пометки уведомления как прочитанного
-    // ГОТОВО (ВОПРОС С СЕССИЯМИ)
     app.put(
       "/api/notifications/:id/read",
       isAuthenticated,
