@@ -17,14 +17,14 @@ const { DropTableSettings } = require("ydb-sdk");
 
 require("dotenv").config();
 
-const endpoint = process.env.YDB_ENDPOINT;
-const database = process.env.YDB_DATABASE;
+const connectionString = process.env.YDB_CONNECTION_STRING;
 
-// const saCredentials = getSACredentialsFromJson("authorized_key.json"); // для ручного запуска
-const saCredentials = getCredentialsFromEnv(); // для запуска внутри облака
+
+const saCredentials = getSACredentialsFromJson("authorized_key.json"); // для ручного запуска
+//const saCredentials = getCredentialsFromEnv(); // для запуска внутри облака
 const authService = new IamAuthService(saCredentials);
 
-const driver = new Driver({ endpoint, database, authService });
+const driver = new Driver({ connectionString, authService });
 
 // имена таблиц
 const NOTIFICATION_TABLE_NAME = "Notifications";

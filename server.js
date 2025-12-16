@@ -67,8 +67,6 @@ async function startServer() {
 
     // Configure templator
     const STATIC_URL = process.env.STORAGE_URL;
-    console.log(STATIC_URL);
-    console.log(process.env.STORAGE_URL);
     app.set("view engine", "ejs");
     app.set("views", "views");
 
