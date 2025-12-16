@@ -65,6 +65,37 @@ async function startServer() {
       })
     );
 
+    // Configure templator
+    const STATIC_URL = null;
+    app.set("view engine", "ejs");
+    app.set("views", "views");
+
+    // Client roots
+    app.get("/index.html", (req, res) => {
+      // Передаем URL Object Storage в шаблон
+      res.render("index.ejs", { STATIC_URL: STATIC_URL });
+    });
+
+    app.get("/calendar.html", (req, res) => {
+      // Передаем URL Object Storage в шаблон
+      res.render("calendar.ejs", { STATIC_URL: STATIC_URL });
+    });
+
+    app.get("/profile.html", (req, res) => {
+      // Передаем URL Object Storage в шаблон
+      res.render("profile.ejs", { STATIC_URL: STATIC_URL });
+    });
+
+    app.get("/login.html", (req, res) => {
+      // Передаем URL Object Storage в шаблон
+      res.render("login.ejs", { STATIC_URL: STATIC_URL });
+    });
+
+    app.get("/sign-up.html", (req, res) => {
+      // Передаем URL Object Storage в шаблон
+      res.render("sign-up.ejs", { STATIC_URL: STATIC_URL });
+    });
+
     // Middleware to check if user is authenticated ВАЖНО ПОТОМ ПЕРЕДЕЛАТЬ!
 
     function isAuthenticated(req, res, next) {
@@ -469,7 +500,7 @@ async function startServer() {
     );
 
     // Static files
-    app.use(express.static(__dirname));
+    app.use(express.static("static"));
 
     // Handle non-existing routes
     app.use((req, res) => {
@@ -478,7 +509,7 @@ async function startServer() {
 
     // ИНИТ СЕРВЕР
 
-    const PORT = 3000;
+    const PORT = process.env.PORT | 3000;
     const server = app.listen(PORT, () => {
       console.log(`Сервер запущен на http://localhost:${PORT}`);
     });
