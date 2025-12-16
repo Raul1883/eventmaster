@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Календарь</title>
-    <link rel="stylesheet" href="css/main-page-style.css">
-    <link rel="stylesheet" href="css/calendar-page-style.css">
-    <link rel="stylesheet" href="css/calendar-rows-style.css">
+    <link rel="stylesheet" href="<%= STATIC_URL %>css/main-page-style.css">
+    <link rel="stylesheet" href="<%= STATIC_URL %>css/calendar-page-style.css">
+    <link rel="stylesheet" href="<%= STATIC_URL %>css/calendar-rows-style.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
 </head>
 <body>
@@ -92,9 +92,9 @@
     
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
     <script src="https://unpkg.com/@mapbox/polyline@1.1.1/src/polyline.js"></script>
-    <script src="scripts/route-planner.js"></script>
-    <script src="scripts/calendar-scripts.js"></script>
-    <script src="scripts/auth-check.js"></script>
-    <script src="scripts/cloudflare-challenge.js"></script>
+    <script src="<%= STATIC_URL %>scripts/route-planner.js"></script>
+    <script src="<%= STATIC_URL %>scripts/calendar-scripts.js"></script>
+    <script src="<%= STATIC_URL %>scripts/auth-check.js"></script>
+    <script src="<%= STATIC_URL %>scripts/cloudflare-challenge.js"></script>
 </body>
 </html>

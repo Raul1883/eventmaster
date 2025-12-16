@@ -66,7 +66,9 @@ async function startServer() {
     );
 
     // Configure templator
-    const STATIC_URL = null;
+    const STATIC_URL = process.env.STORAGE_URL;
+    console.log(STATIC_URL);
+    console.log(process.env.STORAGE_URL);
     app.set("view engine", "ejs");
     app.set("views", "views");
 
@@ -504,12 +506,12 @@ async function startServer() {
 
     // Handle non-existing routes
     app.use((req, res) => {
-      res.status(404).json({ error: "Маршрут не найден" });
+      res.render("index.ejs", { STATIC_URL: STATIC_URL });
     });
 
     // ИНИТ СЕРВЕР
 
-    const PORT = process.env.PORT | 3000;
+    const PORT = process.env.PORT;
     const server = app.listen(PORT, () => {
       console.log(`Сервер запущен на http://localhost:${PORT}`);
     });

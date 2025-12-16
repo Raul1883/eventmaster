@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EventMaster</title>
-    <link rel="stylesheet" href="css/main-page-style.css">
+    <link rel="stylesheet" href="<%= STATIC_URL %>css/main-page-style.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
 </head>
 <body>
@@ -26,7 +26,7 @@
 
     <!-- Notification Button -->
     <button id="notification-btn" class="notification-btn">
-        <img src="images/notification.svg" alt="Notifications" class="notification-icon" width="24" height="24">
+        <img src="<%= STATIC_URL %>images/notification.svg" alt="Notifications" class="notification-icon" width="24" height="24">
     </button>
 
     <!-- Notification Popup -->
@@ -37,9 +37,9 @@
     
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
     <script src="https://unpkg.com/@mapbox/polyline@1.1.1/src/polyline.js"></script>
-    <script src="scripts/route-planner.js"></script>
-    <script src="scripts/index-scripts.js"></script>
-    <script src="scripts/auth-check.js"></script>
-    <script src="scripts/cloudflare-challenge.js"></script>
+    <script src="<%= STATIC_URL %>scripts/route-planner.js"></script>
+    <script src="<%= STATIC_URL %>scripts/index-scripts.js"></script>
+    <script src="<%= STATIC_URL %>scripts/auth-check.js"></script>
+    <script src="<%= STATIC_URL %>scripts/cloudflare-challenge.js"></script>
 </body>
 </html>

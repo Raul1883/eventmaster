@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/profile-style.css">
+    <link rel="stylesheet" href="<%= STATIC_URL %>css/profile-style.css">
     <title>Профиль</title>
 </head>
 <body>
@@ -19,7 +19,7 @@
         </nav>
     </header>
     <div class="container">
-        <img class="profile-pic" src="images/profile-img.svg" alt="Фото профиля">
+        <img class="profile-pic" src="<%= STATIC_URL %>images/profile-img.svg" alt="Фото профиля">
         <div class="information">
             <div class="info-container">
                 <p class="name">Имя:</p>
@@ -34,10 +34,10 @@
                 <p class="email-from-db"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="b09986919e9f86b09588919d809c95de939f9d">[email protected]</a></p>
             </div>
             <a class="edit-btn">
-                <img src="images/edit.svg" alt="Edit Profile" class="edit-icon">
+                <img src="<%= STATIC_URL %>images/edit.svg" alt="Edit Profile" class="edit-icon">
             </a>
             <a class="logout-btn" id="logoutButton">
-                <img src="images/logout.svg" alt="Logout" class="logout-icon">
+                <img src="<%= STATIC_URL %>images/logout.svg" alt="Logout" class="logout-icon">
             </a>
         </div>
         
@@ -46,9 +46,9 @@
         </div>
     </div>
     <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
-    <script src="scripts/profile.js"></script>
-    <script src="scripts/profile_v2.js"></script>
-    <script src="scripts/auth-check.js"></script>
-    <script src="scripts/cloudflare-challenge.js"></script>
+    <script src="<%= STATIC_URL %>scripts/profile.js"></script>
+    <script src="<%= STATIC_URL %>scripts/profile_v2.js"></script>
+    <script src="<%= STATIC_URL %>scripts/auth-check.js"></script>
+    <script src="<%= STATIC_URL %>scripts/cloudflare-challenge.js"></script>
 </body>
 </html>
