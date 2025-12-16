@@ -68,7 +68,6 @@ async function startServer() {
     // Middleware to check if user is authenticated ВАЖНО ПОТОМ ПЕРЕДЕЛАТЬ!
 
     function isAuthenticated(req, res, next) {
-      return next(); // УБРАТЬ ПОТОМ ЭТО!!!!!
       if (req.session.userId) {
         return next();
       }
