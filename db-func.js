@@ -20,8 +20,8 @@ require("dotenv").config();
 const connectionString = process.env.YDB_CONNECTION_STRING;
 
 
-const saCredentials = getSACredentialsFromJson("authorized_key.json"); // для ручного запуска
-//const saCredentials = getCredentialsFromEnv(); // для запуска внутри облака
+//const saCredentials = getSACredentialsFromJson("authorized_key.json"); // для ручного запуска
+const saCredentials = getCredentialsFromEnv(); // для запуска внутри облака
 const authService = new IamAuthService(saCredentials);
 
 const driver = new Driver({ connectionString, authService });

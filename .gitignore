@@ -35,3 +35,5 @@ logs
 # 2. Результаты сборки/файлы Docker Compose
 *.swp
 authorized_key.json
+
+terraform
