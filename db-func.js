@@ -19,10 +19,10 @@ require("dotenv").config();
 
 const connectionString = process.env.YDB_CONNECTION_STRING;
 
-
 //const saCredentials = getSACredentialsFromJson("authorized_key.json"); // для ручного запуска
-const saCredentials = getCredentialsFromEnv(); // для запуска внутри облака
-const authService = new IamAuthService(saCredentials);
+//const authService = new IamAuthService(saCredentials); // дяля ручного запуска
+const authService = getCredentialsFromEnv(); // для запуска внутри облака
+
 
 const driver = new Driver({ connectionString, authService });
 
@@ -756,9 +756,6 @@ if (require.main === module) {
     await initYDB();
 
     try {
-      const res = await asyncDeleteEvent(2, 1);
-
-      console.log(res);
     } catch (err) {
       console.log(err);
     }

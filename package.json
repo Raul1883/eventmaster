@@ -18,6 +18,7 @@
   "homepage": "https://github.com/f3xy1/eventmaster#readme",
   "description": "",
   "dependencies": {
+    "@yandex-cloud/nodejs-sdk": "^2.9.0",
     "cors": "^2.8.5",
     "dotenv": "^17.2.3",
     "ejs": "^3.1.10",
