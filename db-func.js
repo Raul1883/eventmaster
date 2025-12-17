@@ -20,11 +20,15 @@ require("dotenv").config();
 const endpoint = process.env.YDB_ENDPOINT;
 const database = process.env.YDB_DATABASE;
 
-const saCredentials = getSACredentialsFromJson("authorized_key.json"); // для ручного запуска
-const authService = new IamAuthService(saCredentials); // дяля ручного запуска
-//const authService = getCredentialsFromEnv(); // для запуска внутри облака
+let authService = null; 
+if (process.env.FROM_JSON_AUTH) {
+  const saCredentials = getSACredentialsFromJson("authorized_key.json"); // для ручного запуска
+  authService = new IamAuthService(saCredentials); // для ручного запуска
+} else {
+  authService = getCredentialsFromEnv(); // для запуска внутри облака
+}
 
-const driver = new Driver({endpoint, database, authService});
+const driver = new Driver({ endpoint, database, authService });
 
 // имена таблиц
 const NOTIFICATION_TABLE_NAME = "Notifications";
