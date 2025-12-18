@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     // Check user session
     let userId;
     try {
-        const response = await fetch('http://localhost:3000/api/check-session', {
+        const response = await fetch('/api/check-session', {
             credentials: 'include'
         });
         const result = await response.json();
@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     let events = [];
     if (userId) {
         try {
-            const response = await fetch(`http://localhost:3000/api/events/${userId}`, {
+            const response = await fetch(`/api/events/${userId}`, {
                 credentials: 'include'
             });
             const result = await response.json();
@@ -272,7 +272,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             let isOrganizer = false;
             if (userId) {
                 try {
-                    const response = await fetch(`http://localhost:3000/api/user/${userId}`, {
+                    const response = await fetch(`/api/user/${userId}`, {
                         credentials: 'include'
                     });
                     const result = await response.json();
@@ -287,7 +287,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 }
             }
 
-            const currentLogin = userId ? (await (await fetch(`http://localhost:3000/api/check-session`, { credentials: 'include' })).json()).login : null;
+            const currentLogin = userId ? (await (await fetch(`/api/check-session`, { credentials: 'include' })).json()).login : null;
 
             detailsContent.innerHTML = `
                 <div class="form-group">
@@ -414,7 +414,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         if (participants && participants.length > 0) {
             for (const login of participants) {
                 try {
-                    const response = await fetch(`http://localhost:3000/api/check-user-login/${login}`, {
+                    const response = await fetch(`/api/check-user-login/${login}`, {
                         credentials: 'include'
                     });
                     if (!response.ok) {
@@ -446,7 +446,7 @@ document.addEventListener('DOMContentLoaded', async function() {
 
     async function fetchAllUsers() {
         try {
-            const response = await fetch('http://localhost:3000/api/all-users', {
+            const response = await fetch('/api/all-users', {
                 credentials: 'include'
             });
             const result = await response.json();
@@ -596,7 +596,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         let creator = 'Неизвестный пользователь';
         if (userId) {
             try {
-                const response = await fetch(`http://localhost:3000/api/user/${userId}`, {
+                const response = await fetch(`/api/user/${userId}`, {
                     credentials: 'include'
                 });
                 const result = await response.json();
@@ -611,7 +611,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         }
 
         try {
-            const response = await fetch(`http://localhost:3000/api/events/${event.id}`, {
+            const response = await fetch(`/api/events/${event.id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
@@ -681,7 +681,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         let creator = 'Неизвестный пользователь';
         if (userId) {
             try {
-                const response = await fetch(`http://localhost:3000/api/user/${userId}`, {
+                const response = await fetch(`/api/user/${userId}`, {
                     credentials: 'include'
                 });
                 const result = await response.json();
@@ -696,7 +696,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         }
 
         try {
-            const response = await fetch('http://localhost:3000/api/events', {
+            const response = await fetch('/api/events', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -748,7 +748,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         }
 
         try {
-            const response = await fetch(`http://localhost:3000/api/events/${eventId}`, {
+            const response = await fetch(`/api/events/${eventId}`, {
                 method: 'DELETE',
                 credentials: 'include'
             });
@@ -773,14 +773,14 @@ document.addEventListener('DOMContentLoaded', async function() {
             return;
         }
 
-        const currentLogin = userId ? (await (await fetch(`http://localhost:3000/api/check-session`, { credentials: 'include' })).json()).login : null;
+        const currentLogin = userId ? (await (await fetch(`/api/check-session`, { credentials: 'include' })).json()).login : null;
         if (!currentLogin) {
             alert('Ошибка: Невозможно определить текущего пользователя');
             return;
         }
 
         try {
-            const response = await fetch(`http://localhost:3000/api/events/${eventId}/leave`, {
+            const response = await fetch(`/api/events/${eventId}/leave`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

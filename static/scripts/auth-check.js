@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', async function() {
     try {
-        const response = await fetch('http://localhost:3000/api/check-session', {
+        const response = await fetch('/api/check-session', {
             credentials: 'include'
         });
         const result = await response.json();

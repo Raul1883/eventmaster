@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     let userId;
     let userLogin;
     try {
-        const response = await fetch('http://localhost:3000/api/check-session', {
+        const response = await fetch('/api/check-session', {
             credentials: 'include'
         });
         const result = await response.json();
@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     document.querySelector('.information').appendChild(errorContainer);
 
     try {
-        const response = await fetch(`http://localhost:3000/api/user/${userId}`, {
+        const response = await fetch(`/api/user/${userId}`, {
             credentials: 'include'
         });
         const result = await response.json();
@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     let events = [];
     try {
         console.log('Отправляем запрос на получение мероприятий для userId:', userId);
-        const response = await fetch(`http://localhost:3000/api/events/${userId}`, {
+        const response = await fetch(`/api/events/${userId}`, {
             method: 'GET',
             headers: {
                 'Accept': 'application/json',
@@ -194,7 +194,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         });
 
         try {
-            const response = await fetch(`http://localhost:3000/api/user/${userId}`, {
+            const response = await fetch(`/api/user/${userId}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',

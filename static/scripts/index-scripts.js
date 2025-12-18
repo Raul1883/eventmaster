@@ -130,7 +130,7 @@ document.addEventListener('DOMContentLoaded', async function() {
 
     // Check user session
     try {
-        const response = await fetch('http://localhost:3000/api/check-session', {
+        const response = await fetch('/api/check-session', {
             credentials: 'include'
         });
         const result = await response.json();
@@ -148,7 +148,7 @@ document.addEventListener('DOMContentLoaded', async function() {
 
     // Fetch all events
     try {
-        const response = await fetch('http://localhost:3000/api/all-events', {
+        const response = await fetch('/api/all-events', {
             credentials: 'include'
         });
         const result = await response.json();
@@ -171,7 +171,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     async function fetchNotifications() {
         if (!user) return;
         try {
-            const response = await fetch('http://localhost:3000/api/notifications', {
+            const response = await fetch('/api/notifications', {
                 credentials: 'include'
             });
             const result = await response.json();
@@ -229,7 +229,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 const existingNotification = notifications.find(n => n.message === message && !n.is_read && n.type === 'reminder');
                 if (!existingNotification) {
                     try {
-                        const response = await fetch('http://localhost:3000/api/notifications', {
+                        const response = await fetch('/api/notifications', {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json'
@@ -261,7 +261,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             return;
         }
         try {
-            const response = await fetch(`http://localhost:3000/api/events/${notification.event_id}/${action}`, {
+            const response = await fetch(`/api/events/${notification.event_id}/${action}`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 credentials: 'include'
@@ -276,7 +276,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 }
                 // Mark notification as handled locally and delete
                 notification.is_handled = true; // Local flag to trigger UI update
-                await fetch(`http://localhost:3000/api/notifications/${notification.id}`, {
+                await fetch(`/api/notifications/${notification.id}`, {
                     method: 'DELETE',
                     credentials: 'include'
                 });
@@ -287,7 +287,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 // Handle case where user is already a participant
                 console.log(`User ${user.login} is already a participant, deleting invitation notification ${notification.id}`);
                 notification.is_handled = true; // Set handled flag for UI update
-                await fetch(`http://localhost:3000/api/notifications/${notification.id}`, {
+                await fetch(`/api/notifications/${notification.id}`, {
                     method: 'DELETE',
                     credentials: 'include'
                 });
@@ -362,7 +362,7 @@ document.addEventListener('DOMContentLoaded', async function() {
                 deleteBtn.addEventListener('click', async (e) => {
                     e.stopPropagation();
                     try {
-                        const response = await fetch(`http://localhost:3000/api/notifications/${notification.id}`, {
+                        const response = await fetch(`/api/notifications/${notification.id}`, {
                             method: 'DELETE',
                             credentials: 'include'
                         });
@@ -412,7 +412,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         const unreadNotifications = notifications.filter(n => !n.is_read && n.type !== 'invitation');
         for (const notification of unreadNotifications) {
             try {
-                const response = await fetch(`http://localhost:3000/api/notifications/${notification.id}/read`, {
+                const response = await fetch(`/api/notifications/${notification.id}/read`, {
                     method: 'PUT',
                     credentials: 'include'
                 });
@@ -643,7 +643,7 @@ document.addEventListener('DOMContentLoaded', async function() {
 
                 joinBtn.addEventListener('click', async () => {
                     try {
-                        const url = `http://localhost:3000/api/events/${event.id}/${isParticipant ? 'leave' : 'join'}`;
+                        const url = `/api/events/${event.id}/${isParticipant ? 'leave' : 'join'}`;
                         console.log(`Sending request to ${url}, isParticipant: ${isParticipant}`);
                         const response = await fetch(url, {
                             method: 'POST',
@@ -682,7 +682,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     // Function to refetch event data and update UI
     async function fetchEventData(eventId, joinBtn, participantsEl) {
         try {
-            const response = await fetch(`http://localhost:3000/api/events/${user.id}`, {
+            const response = await fetch(`/api/events/${user.id}`, {
                 credentials: 'include'
             });
             const result = await response.json();
