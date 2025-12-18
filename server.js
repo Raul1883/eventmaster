@@ -34,17 +34,10 @@ async function startServer() {
 
     const app = express();
 
-    // Configure CORS to allow multiple origins
-    const allowedOrigins = ["http://localhost:3000", "http://127.0.0.1:5500"];
+    // Configure CORS allowed for all
     app.use(
       cors({
-        origin: function (origin, callback) {
-          if (!origin || allowedOrigins.includes(origin)) {
-            callback(null, true);
-          } else {
-            callback(new Error("Not allowed by CORS"));
-          }
-        },
+        origin: true,
         credentials: true,
       })
     );
